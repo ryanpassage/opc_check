@@ -27,7 +27,7 @@ from project.web.models import Asset
 bad_quality = []
 last_collector = ''
 num_checked = 0
-for asset in Asset.objects.order_by('collector'):
+for asset in Asset.objects.filter(check_enabled=True).order_by('collector'):
     if asset.collector != last_collector:
         print "Creating a new OPC client for %s... " % asset.collector,
         try:
