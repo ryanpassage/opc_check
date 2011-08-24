@@ -18,6 +18,7 @@ class Asset(models.Model):
     name = models.CharField(max_length=50, blank=False)
     path = models.CharField(max_length=100, blank=False)
     collector = models.CharField(max_length=15, choices=COLLECTOR_CHOICES, blank=False)
+    check_enabled = models.BooleanField(default=True)
     check_tag = models.CharField(max_length=25, blank=False)
     quality = models.CharField(max_length=4, editable=False)
     last_check = models.DateTimeField(auto_now=True, editable=False)

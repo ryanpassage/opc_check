@@ -24,6 +24,7 @@ setup_environ(settings)
 # import models
 from project.web.models import Asset
 
+bad_quality = []
 last_collector = ''
 num_checked = 0
 for asset in Asset.objects.order_by('collector'):
@@ -41,6 +42,9 @@ for asset in Asset.objects.order_by('collector'):
     status = opc.properties(asset.full_path(), id=3)
     print status
     
+    if status == "Bad":
+        bad_quality.append(asset)
+
     asset.quality = status
     asset.save()
     
@@ -49,3 +53,14 @@ for asset in Asset.objects.order_by('collector'):
 
 opc.close()
 print "Checked %d assets in %d seconds" % (num_checked, time.time() - start_time)
+
+# if we have any bad quality assets, we need to send out some emails
+if len(bad_quality) > 0:
+    # compose a message
+    msg = "Attention!\n\nThe following assets reported BAD DATA QUALITY during the latest check!\n\n"
+
+    for asset in bad_quality:
+        msg += "  - %s\n" % asset.full_path()
+
+    from django.core.mail import send_mail
+    send_mail('Activplant BAD DATA alert!', msg, 'activplant@cmwa.com', ['it-alerts@cmwa.com'])
