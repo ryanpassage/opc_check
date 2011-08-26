@@ -7,11 +7,11 @@ Problem: We monitor assets on our plant floor using OPC software (Kepware) that 
 
 Solution: OPC Check!
 
-- perform_check.py: script that will run every X minutes via cron to read the current data quality for all assets with "EOC" tags, and store their status in a sqlite database.  The assets are loaded from the database, and the script cycles through each OPC server (as defined in the Django project model) to read the assets and update their status.
+- perform_check.py: script that will run every X minutes via cron to read the current data quality for all assets with "EOC" tags, and store their status in a sqlite database.  The assets are loaded from the database, and the script cycles through each OPC server (as defined in the Django project model) to read the assets and update their status.  Emails alerts are sent out if we have bad data to report.
 
 - fetch_opc.py: script that initially loads the assets in to our database using the Django "Asset" model.  OpenOPC provides a list of assets from Kepware with "EOC" tags, and these get imported in to the database.  This really only needs to be run once, to pre-load the database.
 
-- web/*: eventually this will provide a web interface to view the asset model information (this is why I used Django to manage the database objects).
+- web/*: the django app.  contains model definitions and a little admin tweaking.  eventually this will provide a web interface to view the asset model information (this is why I used Django to manage the database objects).
 
 Requirements:
 - OpenOPC (http://openopc.sourceforge.net/) is awesome.  The module is provided here in OpenOPC.py, however opening a remote client requires their Gateway service to be installed also.
