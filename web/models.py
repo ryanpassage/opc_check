@@ -22,6 +22,7 @@ class Asset(models.Model):
     check_tag = models.CharField(max_length=25, blank=False)
     quality = models.CharField(max_length=4, editable=False)
     last_check = models.DateTimeField(auto_now=True, editable=False)
+    bad_count = models.IntegerField(default=0, editable=False)
 
     def full_path(self):
         return "%s.%s.%s" % (self.path, self.name, self.check_tag)

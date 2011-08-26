@@ -44,6 +44,7 @@ for asset in Asset.objects.filter(check_enabled=True).order_by('collector'):
     
     if status == "Bad":
         bad_quality.append(asset)
+        asset.bad_count += 1
 
     asset.quality = status
     asset.save()
@@ -60,7 +61,7 @@ if len(bad_quality) > 0:
     msg = "Attention!\n\nThe following assets reported BAD DATA QUALITY during the latest check!\n\n"
 
     for asset in bad_quality:
-        msg += "  - %s\n" % asset.full_path()
+        msg += "  - %s (%d times)\n" % (asset.full_path(), asset.bad_count)
 
     from django.core.mail import send_mail
-    send_mail('Activplant BAD DATA alert!', msg, 'activplant@cmwa.com', ['it-alerts@cmwa.com'])
+    send_mail('Activplant BAD DATA alert!', msg, 'activplant@cmwa.com', ['rpassage@cmwa.com', 'wmargolen@cmwa.com'])
