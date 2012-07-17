@@ -1,4 +1,4 @@
-# OPC Check #
+## OPC Check ##
 (creative name, I know!)
 
 This is a set of scripts that I wrote to meet a specific need at my company.  You are welcome to use them, but they will need to be tweaked to work for your environment.
@@ -11,9 +11,9 @@ Solution: OPC Check!
 
 - *fetch_opc.py*: script that initially loads the assets in to our database using the Django "Asset" model.  OpenOPC provides a list of assets from Kepware with "EOC" tags, and these get imported in to the database.  This really only needs to be run once, to pre-load the database.
 
-- *web/\**: the django app.  contains model definitions and a little admin tweaking.  eventually this will provide a web interface to view the asset model information (this is why I used Django to manage the database objects).
+- *web/**: the django app.  contains model definitions and a little admin tweaking.  eventually this will provide a web interface to view the asset model information (this is why I used Django to manage the database objects).
 
-## Requirements ##
+### Requirements ###
 - OpenOPC (http://openopc.sourceforge.net/) is awesome.  The module is provided here in OpenOPC.py, however opening a remote client requires their Gateway service to be installed also.
 
 - Django (http://www.djangoproject.com) for the database ORM and easy web-interface creation down the road.  Also, automatic admin interface is great for managing our asset records.
